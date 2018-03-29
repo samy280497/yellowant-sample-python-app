@@ -20,15 +20,18 @@ class Commands:
         self.args = args
 
         self.user_integration = database.get_user_integration(self.yellowant_integration_id)
-        self.command = 
+        self.command = commands_by_invoke_name.get(self.command_name)
     
     def parse(self):
         message = MessageClass()
-
+        
         if self.yellowant_integration_id is None:
             message.message_text = "Sorry! I could not find your integration."
         
-        elif self.command 
+        elif self.command is None:
+            message.message_text = "Sorry! I could not find that command."
+        
+        return self.command(self.args, self.user_integration)
 
 
 ### Sample commands ###
